@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>new的执行原理</h2>
+</body>
+<script>
+function Person(name='alice',age=0) {
+   this.name=name
+   this.age=age
+
+}
+
+//var p1=new Person('张三',20)
+
+//模拟new的实现
+function ObjectFatory() {
+    //arguments[0]
+   
+   //创建一个要返回的对象
+   var obj=new Object()
+
+   //获取构造函数
+   //var Constructor=arguments[0]
+   var Constructor=[].shift.apply(arguments)
+
+   //将obj对象____proto___自动指向构造函数的prototype
+   obj.__proto__=Constructor.prototype;
+
+   //此时此刻arguments里面只能[张三,20]
+   Constructor.apply(obj,arguments)
+
+   return obj;
+   
+}
+
+var p1=ObjectFatory(Person,'张三',20)
+var p2=ObjectFatory(Person,'李四',25)
+var p3=ObjectFatory(Person,'马六',21)
+
+console.log('p1:',p1)
+console.log('p1.name:',p1.name)
+console.log('p1.age:',p1.age)
+
+console.log('p2:',p2)
+console.log('p2.name:',p2.name)
+console.log('p2.age:',p2.age)
+
+
+
+
+
+</script>
+</html>

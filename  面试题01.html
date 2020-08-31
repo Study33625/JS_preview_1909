@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>经典面试题</h2>
+</body>
+<script>
+
+
+
+function Foo() {
+   getName=function() {alert(1)}
+   return this;
+}
+
+Foo.getName=function() {alert(2)}
+Foo.prototype.getName=function() {alert(3)}
+
+
+var getName=function() {alert(4)}
+function getName() {alert(5)}
+
+//下面就是逐行输出结果
+Foo.getName()  //结果2，记住函数本身也是对象
+getName()  //4 考察点是函数的调用区别，函数预解析
+Foo().getName() //1 考查作用域和this指向
+getName() //1,???
+new Foo.getName() //2 
+new Foo().getName()  //3 考察原型链的知识
+new new Foo().getName() //3
+
+</script>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>this复习</h2>
+    <button id="btn">点我</button>
+</body>
+<script>
+//console.log(this===window)
+
+/*
+function Fn() {
+
+   console.log('Fn:',this)
+
+   //this.name='1909A'
+}
+
+*/
+//1.直接调用函数 this即window
+//Fn()
+
+//2. new 函数，this即为当前构造函数实例化对象
+//var f1=new Fn()
+
+//3.函数属于对象
+
+/*
+var obj={
+    name:'1909A',
+    Fn:function() {
+
+        var hehe=function() {
+
+            console.log('this===window:',this===window)
+             console.log('this===obj:',this===obj)
+             //console.log('this===Fn:',this===Fn)
+        }
+
+       hehe()
+
+
+    }
+
+}
+
+
+
+obj.Fn();
+
+*/
+
+//4.定时器上的this
+/*
+var obj={
+    name:'1909A',
+    Fn:function() {
+
+       setTimeout(function() {
+
+           console.log('this===window:',this===window)
+           console.log('this===obj:',this===obj)
+
+       },0)
+
+    }
+
+}
+
+obj.Fn();
+
+*/
+
+//5.DOM中的this
+
+var btn=document.querySelector('#btn')
+btn.onclick=function() {
+  // let _this=this;
+   setTimeout(()=> {
+
+        console.log(this===btn)
+   },0)
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</html>

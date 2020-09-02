@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>闭包--封装组件或插件</h2>
+</body>
+<script>
+var Counter=(function() {
+
+   //私有变量
+   var index=0;
+
+   //私有方法
+   var add=function() {
+       return index++;
+   }
+
+   var jian=function() {
+
+   }
+
+
+   return {
+       //暴露出去供用户的方法
+       increment:function() {
+           add()
+       },
+       getValue:function() {
+           return index;
+       }
+   }
+
+
+})()
+
+
+Counter=null
+
+
+
+
+
+</script>
+</html>

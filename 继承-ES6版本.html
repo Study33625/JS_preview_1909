@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>ES6继承</h2>
+</body>
+<script>
+//创建一个父类
+class Parent {
+   constructor(name) {
+        this.name=name ||'jack'
+        this.colors=['red','green','blue']
+   }
+
+  getName() {
+    return this.name;
+}
+
+}
+
+
+//创建一个子类
+ class Child extends Parent {
+
+      constructor(name) {
+          super(name)  //super就是父类Parent
+      }
+
+      getValue() {
+
+
+      }
+    
+}
+
+
+
+var c1=new Child()
+
+
+
+</script>
+</html>

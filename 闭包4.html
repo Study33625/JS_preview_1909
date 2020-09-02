@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="form">
+        <p class="help">请输入内容</p>
+        <ul>
+            <li>
+                <label for="">用户名</label>
+                <input type="text" id="username" name="username">
+            </li>
+            <li>
+                 <label for="">邮箱</label>
+                <input type="text" id="email" name="email">
+            </li>
+            <li>
+                 <label for="">地址</label>
+                <input type="text" id="address" name="address">
+            </li>
+        </ul>
+    </div>
+</body>
+<script>
+
+/*
+function makeHelp(help) {
+    
+    return function() {
+       console.log(help)
+        document.querySelector('.help').innerHTML=help
+
+    }
+ }
+
+*/
+
+function init() {
+    var userInfo=[
+        {id:'username',helpText:'请输入用户名'},
+        {id:'email',helpText:'请输入邮箱'},
+        {id:'address',helpText:'请输入地址'},
+    ]
+
+    //动态绑定onfocus事件
+    /*
+    for(var i=0;i<userInfo.length;i++) {
+       (function() {
+        var item=userInfo[i];
+        document.getElementById(item.id).onfocus=function() {
+            document.querySelector('.help').innerHTML=item.helpText
+        }
+
+       })()
+
+    }
+
+    */
+
+      for(var i=0;i<userInfo.length;i++) {
+        var item=userInfo[i];
+        document.getElementById(item.id).onfocus=(function(item) {
+           // console.log(item)
+           
+           return function() {
+
+                    document.querySelector('.help').innerHTML=item.helpText
+
+           }
+
+
+        })(item)
+
+      
+
+    }
+
+}
+init()
+</script>
+</html>

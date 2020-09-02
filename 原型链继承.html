@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>原型链继承</h2>
+</body>
+<script>
+//创建一个父类
+function Parent(name) {
+    this.name=name ||'jack'
+    this.colors=['red','green','blue']
+
+}
+
+Parent.prototype.getName=function() {
+    return this.name;
+}
+
+var p1=new Parent();
+p1.getName();
+
+
+//创建一个子类
+function Child(name) {
+
+    Parent.call(this,name)
+    
+}
+
+Child.prototype=new Parent();
+
+var c1=new Child()
+c1.getName()
+
+
+</script>
+</html>

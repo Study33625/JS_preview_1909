@@ -220,6 +220,7 @@ Math.min()  取小值
 # 五、this指向
 
 
+
 ```
 检测是否是手机端，是的话，跳转到移动页面
 try {
@@ -474,6 +475,31 @@ var obj={
     - new构造函数传参自动赋值给当前实例化对象
 - 具体如何实现new呢
 
+```
+//模拟new的实现
+function ObjectFatory() {
+    //arguments[0]
+   
+   //创建一个要返回的对象
+   var obj=new Object()
+
+   //获取构造函数
+   //var Constructor=arguments[0]
+   var Constructor=[].shift.apply(arguments)
+
+   //将obj对象____proto___自动指向构造函数的prototype
+   obj.__proto__=Constructor.prototype;
+
+   //此时此刻arguments里面只能[张三,20]
+   Constructor.apply(obj,arguments)
+
+   return obj;
+   
+}
+```
+
+
+
 
 
 # 八、防抖和节流
@@ -569,15 +595,304 @@ var obj={
 
 
 
-
-
-
-
-
-
 # 九、闭包
+
+> 面试时说话让面试官感觉你有经验，面试时要带点匪气！
+
+- 闭包是由什么构成
+
+```
+闭包=函数+词法作用域
+
+词法作用域：即以变量声明定义的位置为参照，如果当前位置没有定义，就会访问父级定义的位置
+
+广义上闭包：
+var a=1000;
+function fn1() {
+
+   alert(a)
+
+}
+
+fn1()
+
+平时工作中用到的闭包狭义上闭包：
+1.函数内嵌套函数
+2.子函数引用了父函数的相关变量
+
+特点：长期驻留内存
+```
+
+ 
+
+- 闭包应用场景和实现
+
+```
+//求和
+function makeAdd(x) {
+
+
+    return function(y) {
+
+     return x+y
+
+   }
+
+}
+//设置字号
+function setFontSize(size) {
+
+
+   return function() {
+
+     document.body.style.fontSize=size+"px"
+
+   }
+
+}
+
+
+//循环表单
+
+
+function makeHelp(help) {
+    
+    return function() {
+       console.log(help)
+        document.querySelector('.help').innerHTML=help
+
+    }
+ }
+
+
+function init() {
+    var userInfo=[
+        {id:'username',helpText:'请输入用户名'},
+        {id:'email',helpText:'请输入邮箱'},
+        {id:'address',helpText:'请输入地址'},
+    ]
+
+    //动态绑定onfocus事件
+    for(var i=0;i<userInfo.length;i++) {
+        var item=userInfo[i];
+        document.getElementById(item.id).onfocus=makeHelp(item.helpText)
+
+    }
+
+}
+init()
+
+//封装组件或插件
+var Counter=(function() {
+
+   //私有变量
+   var index=0;
+
+   //私有方法
+   var add=function() {
+       return index++;
+   }
+
+   var jian=function() {
+
+   }
+
+
+   return {
+       //暴露出去供用户的方法
+       increment:function() {
+           add()
+       },
+       getValue:function() {
+           return index;
+       }
+   }
+
+
+})()
+
+```
+
+- 闭包优点和缺点
+
+```
+1.长期驻留内存，可以缓存数据
+2.可以隔离作用域，避免全局污染
+```
+
+
+
+> 如何回答的一个技术记汇，或你对xxxx的理解
+>
+> 例如：你说一下对闭包的理解
+>
+> 答：1.xxx是什么
+>
+> ​       2.应用场景
+>
+> ​       3.优缺点
+>
+> ​      4.具体实现
+>
+> ​     5.还有没有更好的解决方案！
+
+
+
+
 
 # 十、原型链
 
+- 原型链是JS特有的一种继承机制
+- 原型链会涉及到___proto___,prototype
+- 原型链的顶端就是null
+- 应用场景：继承
+- 优点：把相同或类似的方法写在原型上，方便实例化对象复用
+- 缺点：不好理解，通常只前端人才理解
+- ES6推出class extends来实现继承
+
+
+
 # 十一、JavaScript继承
+
+- 继承是面向对象开发思想的特性之一
+
+- 面试对象的三大特点：封装，继承，多态
+
+- 继承主要分ES5和ES6的继承方式
+
+    - ES5的继承--主要通过函数实现类
+
+        - 原型链继承
+
+        ```
+        //创建一个父类
+        function Parent() {
+            this.name='jack'
+        
+        }
+        
+        Parent.prototype.getName=function() {
+            return this.name;
+        }
+        
+        
+        
+        
+        //创建一个子类
+        function Child() {
+        
+            
+        }
+        
+        //子类的原型等于父类的实例化对象
+        Child.prototype=new Parent();
+        
+        var c1=new Child()
+        ```
+
+        > 缺点：
+        >
+        >   1.不能传参
+        >
+        > 2. 没有解决对象引用问题
+
+        - 借用构造函数继承
+
+        ```
+        //创建一个父类
+        function Parent(name) {
+            this.name=name ||'jack'
+            this.colors=['red','green','blue']
+        
+        }
+        
+        Parent.prototype.getName=function() {
+            return this.name;
+        }
+        
+        //创建一个子类
+        function Child(name) {
+            //借用父类来承继实例属性，但不能继承父类方法
+            Person.call(this,name)
+            
+        }
+        ```
+
+        > 缺点：不能继承父类方法
+
+        
+
+        - 组合继承=原型链继承+借用构造函数继承
+
+        ```
+        //创建一个父类
+        function Parent(name) {
+            this.name=name ||'jack'
+            this.colors=['red','green','blue']
+        
+        }
+        
+        Parent.prototype.getName=function() {
+            return this.name;
+        }
+        
+        var p1=new Parent();
+        p1.getName();
+        
+        
+        //创建一个子类
+        function Child(name) {
+        
+            Parent.call(this,name)
+            
+        }
+        
+        Child.prototype=new Parent();
+        
+        var c1=new Child()
+        c1.getName()
+        
+        ```
+
+        
+
+        > 优点：即能继承父类的原型方法，也能传递参数属性
+
+        
+
+    - ES6继承
+
+        - 通过class,extends,super实现 //继承必须要写super
+
+    ```
+    //创建一个父类
+    class Parent {
+       constructor(name) {
+            this.name=name ||'jack'
+            this.colors=['red','green','blue']
+       }
+    
+      getName() {
+        return this.name;
+    }
+    
+    }
+    
+    
+    //创建一个子类
+     class Child extends Parent {
+    
+          constructor(name) {
+              super(name)  //super就是父类Parent
+          }
+    
+          getValue() {
+    
+    
+          }
+        
+    }
+    ```
+
+    
 

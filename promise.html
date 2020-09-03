@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>promise</h2>
+</body>
+<script>
+
+function waiting() {
+
+    return new Promise((resolve,reject)=>{
+   
+
+          //我这里只是用setTimeout来模拟axios,
+             setTimeout(function() {
+                //console.log(2)
+                //reject('哈哈')
+                reject('第一个成功返回')
+
+            },2000)
+
+        
+    })
+
+ }
+
+
+
+function waiting2() {
+
+    return new Promise((resolve,reject)=>{
+   
+             setTimeout(function() {
+                //console.log(2)
+               // reject('哈哈')
+               resolve('第二个接口成功返回')
+
+            },2000)
+
+        
+    })
+
+ }
+
+
+/*
+waiting().then(res=>{
+   console.log(1)
+   console.log('res:',res)
+    console.log(3)
+
+}).catch(error=>{
+
+   console.log('error:',error)
+
+})
+
+*/
+
+Promise.all([waiting(),waiting2()])
+       .then(res=>{
+
+           console.log('同时调用：',res)
+
+       }).catch(error=>{
+           console.log('error:',error)
+       })
+
+
+ 
+
+  
+
+ 
+
+
+
+
+
+</script>
+</html>

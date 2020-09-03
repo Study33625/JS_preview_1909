@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>async/await</h2>
+</body>
+<script>
+
+function waiting() {
+    return new Promise((resolve,reject)=>{
+          //我这里只是用setTimeout来模拟axios,
+             setTimeout(function() {
+                resolve('第二个接口返回')
+
+            },2000)
+
+        
+    })
+
+ }
+
+
+
+function waiting2() {
+    return new Promise((resolve,reject)=>{
+          //我这里只是用setTimeout来模拟axios,
+             setTimeout(function() {
+                reject('第二接口返回')
+
+            },2000)
+
+        
+    })
+
+ }
+
+
+/*
+ async function handleFn() {
+   console.log(1)
+
+   let res=await waiting()
+   console.log('res:',res)
+
+  let res2=await waiting2(res)
+   console.log(res2)
+
+ }
+
+*/
+
+async function handleFn() {
+   console.log(1)
+
+ //  let res=await waiting()
+  // console.log('res:',res)
+
+ // let res2=await waiting2(res)
+  // console.log(res2)
+    //并发执行
+    let res=await Promise.all([waiting(),waiting2()])
+    console.log('res:',res)
+     console.log('lalallaallal')
+ }
+
+ handleFn().catch(res=>{
+
+     console.log('error:',res)
+ })
+  
+
+
+</script>
+</html>
